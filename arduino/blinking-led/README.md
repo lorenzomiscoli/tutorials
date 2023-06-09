@@ -1,3 +1,3 @@
 # Blinking Led
 
-Sketch to blink an LED with Arduino
+Related Article: [Blinking an LED With Arduino](https://lorenzomiscoli.com/blinking-an-led-with-arduino/)
