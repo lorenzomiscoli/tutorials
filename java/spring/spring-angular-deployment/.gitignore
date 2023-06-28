@@ -1,0 +1,10 @@
+.project
+.classpath
+.settings/
+/target/
+/bin/
+src/frontend/node/
+src/frontend/node_modules/
+src/frontend/dist/
+src/frontend/.vscode
+src/frontend/.angular
