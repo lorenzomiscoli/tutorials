@@ -1,0 +1,6 @@
+spring:
+   datasource:
+      driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+      url: jdbc:sqlserver://sql-server;databaseName=DockerSpringSqlServer;verifyServerCertificate=false;useSSL=false;encrypt=false;
+      username: sa
+      password: 1lx5quwranlcLp44xu@r

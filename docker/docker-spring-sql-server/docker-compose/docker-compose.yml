@@ -1,0 +1,48 @@
+services:
+  docker-spring-sql-server:
+    container_name: docker-spring-sql-server
+    volumes:
+      - "docker-spring-sql-server:/app/logs"
+    build:
+      context: ../
+    ports:
+      - 8080:8080
+    depends_on:
+      - sql-server-configurator
+    environment:
+      JAR: docker-spring-sql-server.jar
+    restart: always
+  sql-server:
+    container_name: sql-server
+    image: mcr.microsoft.com/mssql/server:2022-CU9-ubuntu-20.04
+    ports:
+      - "1433:1433"
+    restart: always
+    healthcheck:
+      test: ["CMD-SHELL", "sh", "-c", "dbHealthcheck.sh"]
+      interval: 10s
+      retries: 10
+      start_period: 10s
+      timeout: 3s
+    environment:
+      SA_PASSWORD: ${DB_PWD}
+      ACCEPT_EULA: "Y"
+    volumes:
+      - docker-spring-sql-server-db:/var/opt/mssql/
+      - docker-spring-sql-server-db:/var/opt/sqlserver/data
+      - docker-spring-sql-server-db:/var/opt/sqlserver/log
+      - docker-spring-sql-server-db:/var/opt/sqlserver/backup
+  sql-server-configurator:
+    image: mcr.microsoft.com/mssql/server:2022-CU9-ubuntu-20.04
+    volumes:
+      - ./database:/docker-entrypoint-initdb.d
+      - ./dbInit.sh:/dbInit.sh
+    depends_on:
+       sql-server:
+        condition: service_healthy
+    command: ["sh", "-c", "./dbInit.sh"]
+    environment:
+      DB_PWD: ${DB_PWD}
+volumes:
+ docker-spring-sql-server:
+ docker-spring-sql-server-db:

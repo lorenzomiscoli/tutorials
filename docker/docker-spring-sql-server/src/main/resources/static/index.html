@@ -1,0 +1,14 @@
+<h1>Accounts:</h1>
+<div id="account-container"></div>
+<script>
+    fetch('./accounts')
+        .then((response) => response.json())
+        .then(data => {
+            let container = document.getElementById("account-container");
+            for (var row of data) {
+                let node = document.createElement("h2");
+                node.appendChild(document.createTextNode(row.username));
+                container.appendChild(node);
+            }
+        })
+</script>
