@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Page Title</title>
+  </head>
+  <body>
+    <ul id="list"></ul>
+    <script>
+      const evtSource = new EventSource("http://localhost:8080/sse");
+      evtSource.addEventListener("add-category", event => {
+        const newElement = document.createElement("li");
+        const eventList = document.getElementById("list");
+        newElement.textContent = `message: ${event.data}`;
+        eventList.appendChild(newElement);
+      })
+    </script>
+  </body>
+</html>
